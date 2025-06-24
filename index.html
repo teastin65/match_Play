@@ -24,6 +24,10 @@
       text-align: center;
     }
 
+    .player-column {
+      text-align: left;
+    }
+
     .score-table th {
       font-weight: bold;
       padding: 4px;
@@ -47,7 +51,7 @@
   <div class="top-left">Match Play</div>
   <table class="score-table">
     <tr>
-      <th>Player</th>
+      <th class="player-column">Player</th>
       <th>1</th>
       <th>2</th>
       <th>3</th>
@@ -68,7 +72,7 @@
       <th>18</th>
     </tr>
     <tr>
-      <td><input type="text" class="name-input" placeholder="Player 1"></td>
+      <td class="player-column"><input type="text" class="name-input" placeholder="Player 1"></td>
       <td><input type="number" min="0" class="score-input"></td>
       <td><input type="number" min="0" class="score-input"></td>
       <td><input type="number" min="0" class="score-input"></td>
@@ -89,7 +93,7 @@
       <td><input type="number" min="0" class="score-input"></td>
     </tr>
     <tr>
-      <td><input type="text" class="name-input" placeholder="Player 2"></td>
+      <td class="player-column"><input type="text" class="name-input" placeholder="Player 2"></td>
       <td><input type="number" min="0" class="score-input"></td>
       <td><input type="number" min="0" class="score-input"></td>
       <td><input type="number" min="0" class="score-input"></td>
