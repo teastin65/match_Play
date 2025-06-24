@@ -110,5 +110,43 @@
       <td><input type="number" min="0" class="score-input"></td>
     </tr>
   </table>
+  <button id="calcMatchBtn">Calculate Match</button>
+  <div id="matchResult"></div>
+  <script>
+    function calculateMatch() {
+      const rows = document.querySelectorAll('.score-table tr');
+      const player1Scores = rows[1].querySelectorAll('.score-input');
+      const player2Scores = rows[2].querySelectorAll('.score-input');
+
+      let matchScore = 0;
+
+      for (let i = 0; i < player1Scores.length; i++) {
+        const p1 = Number(player1Scores[i].value);
+        const p2 = Number(player2Scores[i].value);
+
+        if (!isNaN(p1) && !isNaN(p2)) {
+          if (p1 < p2) {
+            matchScore++;
+          } else if (p2 < p1) {
+            matchScore--;
+          }
+        }
+      }
+
+      const player1Name = rows[1].querySelector('.name-input').value || 'Player 1';
+      const player2Name = rows[2].querySelector('.name-input').value || 'Player 2';
+
+      const result = document.getElementById('matchResult');
+      if (matchScore > 0) {
+        result.textContent = player1Name + ' wins ' + matchScore + ' up';
+      } else if (matchScore < 0) {
+        result.textContent = player2Name + ' wins ' + Math.abs(matchScore) + ' up';
+      } else {
+        result.textContent = 'Match is tied';
+      }
+    }
+
+    document.getElementById('calcMatchBtn').addEventListener('click', calculateMatch);
+  </script>
 </body>
 </html>
