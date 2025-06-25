@@ -44,6 +44,9 @@
     #calcMatchBtn {
       margin: 10px;
     }
+    #saveMatchBtn {
+      margin: 10px;
+    }
   </style>
 </head>
 <body>
@@ -114,6 +117,7 @@
     </tr>
   </table>
   <button id="calcMatchBtn">Calculate Match</button>
+  <button id="saveMatchBtn">Save Match</button>
   <div id="matchResult"></div>
   <input id="matchSearch" placeholder="Search matches" />
   <div id="pastMatches"></div>
@@ -189,13 +193,20 @@
         result.textContent = 'Match is tied';
       }
 
-      saveMatchResult();
-      renderMatches();
-    }
+      }
 
-    document.getElementById('calcMatchBtn').addEventListener('click', calculateMatch);
-    document.getElementById('matchSearch').addEventListener('input', filterMatches);
-    document.addEventListener('DOMContentLoaded', renderMatches);
+      function saveMatch() {
+        saveMatchResult();
+        renderMatches();
+        document.getElementById('matchResult').textContent = '';
+        document.querySelectorAll('.score-input').forEach(input => input.value = '');
+        document.querySelectorAll('.name-input').forEach(input => input.value = '');
+      }
+
+      document.getElementById('calcMatchBtn').addEventListener('click', calculateMatch);
+      document.getElementById('saveMatchBtn').addEventListener('click', saveMatch);
+      document.getElementById('matchSearch').addEventListener('input', filterMatches);
+      document.addEventListener('DOMContentLoaded', renderMatches);
   </script>
 </body>
 </html>
