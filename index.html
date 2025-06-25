@@ -115,7 +115,48 @@
   </table>
   <button id="calcMatchBtn">Calculate Match</button>
   <div id="matchResult"></div>
+  <input id="matchSearch" placeholder="Search matches" />
+  <div id="pastMatches"></div>
   <script>
+    function saveMatchResult() {
+      const rows = document.querySelectorAll('.score-table tr');
+      const player1Name = rows[1].querySelector('.name-input').value || 'Player 1';
+      const player2Name = rows[2].querySelector('.name-input').value || 'Player 2';
+      const resultText = document.getElementById('matchResult').textContent;
+
+      const match = {
+        player1: player1Name,
+        player2: player2Name,
+        result: resultText
+      };
+
+      const matches = JSON.parse(localStorage.getItem('matches')) || [];
+      matches.push(match);
+      localStorage.setItem('matches', JSON.stringify(matches));
+    }
+
+    function renderMatches(matches) {
+      const list = document.getElementById('pastMatches');
+      list.innerHTML = '';
+      const data = matches || JSON.parse(localStorage.getItem('matches')) || [];
+      data.forEach(m => {
+        const div = document.createElement('div');
+        div.textContent = m.player1 + ' vs ' + m.player2 + ' - ' + m.result;
+        list.appendChild(div);
+      });
+    }
+
+    function filterMatches() {
+      const query = document.getElementById('matchSearch').value.toLowerCase();
+      const matches = JSON.parse(localStorage.getItem('matches')) || [];
+      const filtered = matches.filter(m =>
+        m.player1.toLowerCase().includes(query) ||
+        m.player2.toLowerCase().includes(query) ||
+        m.result.toLowerCase().includes(query)
+      );
+      renderMatches(filtered);
+    }
+
     function calculateMatch() {
       const rows = document.querySelectorAll('.score-table tr');
       const player1Scores = rows[1].querySelectorAll('.score-input');
@@ -147,9 +188,14 @@
       } else {
         result.textContent = 'Match is tied';
       }
+
+      saveMatchResult();
+      renderMatches();
     }
 
     document.getElementById('calcMatchBtn').addEventListener('click', calculateMatch);
+    document.getElementById('matchSearch').addEventListener('input', filterMatches);
+    document.addEventListener('DOMContentLoaded', renderMatches);
   </script>
 </body>
 </html>
